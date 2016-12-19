@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.commons.codec.binary.Base64;
+
 /**
  * Classe utilizzata per la gestione dei Digest dei files
  * 
@@ -28,22 +30,45 @@ class Digest {
 		this.algorithm = algorithm;
 	}
 
+	public String getDigest64Base(String testo) throws NoSuchAlgorithmException{
+		return getDigest(testo, true);
+	}
+
 	public String getDigest(String testo) throws NoSuchAlgorithmException{
+		return getDigest(testo, false);
+	}
+
+	private String getDigest(String testo, boolean base64) throws NoSuchAlgorithmException{
 		MessageDigest md = null;
 		String result = null;
 
 		try {
 			md = MessageDigest.getInstance(algorithm);
 			md.update(testo.getBytes());
-
-			result = convert(md.digest());
+			 
+			if (base64){
+				result = Base64.encodeBase64String(md.digest());
+			} else {
+				result = convert(md.digest());
+			}
 		} catch (NoSuchAlgorithmException e) {
 			throw e;
 		}
 
 		return result;
 	}
+
 	public String getDigest(File fInput) throws NoSuchAlgorithmException, 
+			FileNotFoundException, IOException{
+		return getDigest(fInput, false);
+	}
+
+	public String getDigest64Base(File fInput) throws NoSuchAlgorithmException, 
+			FileNotFoundException, IOException{
+		return getDigest(fInput, true);
+	}
+
+	private String getDigest(File fInput, boolean base64) throws NoSuchAlgorithmException, 
 			FileNotFoundException, IOException{
 		MessageDigest md = null;
 		FileInputStream fis = null;
@@ -60,7 +85,11 @@ class Digest {
 			  md.update(dataBytes, 0, nread);
 			};
  
-			result = convert(md.digest());
+			if (base64){
+				result = Base64.encodeBase64String(md.digest());
+			} else {
+				result = convert(md.digest());
+			}
 		} catch (NoSuchAlgorithmException e) {
 			throw e;
 		} catch (FileNotFoundException e) {
