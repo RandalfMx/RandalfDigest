@@ -12,18 +12,17 @@ import java.security.NoSuchAlgorithmException;
  * @author massi
  *
  */
-public class SHA1 extends Digest {
+public class SHA256 extends Digest {
 
 	/**
 	 * @param algorithm
 	 * @throws NoSuchAlgorithmException
 	 */
-	public SHA1() {
-		super("SHA-1");
+	public SHA256() {
+		super("SHA-256");
 	}
 
-	public SHA1(File fInput) throws NoSuchAlgorithmException, FileNotFoundException, IOException {
-		super("SHA-1", fInput);
+	public SHA256(File fInput) throws NoSuchAlgorithmException, FileNotFoundException, IOException {
+		super("SHA-256", fInput);
 	}
-
 }

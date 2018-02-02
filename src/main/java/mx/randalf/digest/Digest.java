@@ -21,6 +21,7 @@ import org.apache.commons.codec.binary.Base64;
 class Digest {
 
 	private String algorithm = null;
+	private byte[] digest = null;
 
 	/**
 	 * @throws NoSuchAlgorithmException 
@@ -28,6 +29,11 @@ class Digest {
 	 */
 	public Digest(String algorithm) {
 		this.algorithm = algorithm;
+	}
+
+	public Digest(String algorithm, File fInput) throws NoSuchAlgorithmException, FileNotFoundException, IOException {
+		this.algorithm = algorithm;
+		digest = getDigest(fInput);
 	}
 
 	public String getDigest64Base(String testo) throws NoSuchAlgorithmException{
@@ -58,21 +64,21 @@ class Digest {
 		return result;
 	}
 
-	public String getDigest(File fInput) throws NoSuchAlgorithmException, 
+	public String getDigest() throws NoSuchAlgorithmException, 
 			FileNotFoundException, IOException{
-		return getDigest(fInput, false);
+		return convert(digest);
 	}
 
-	public String getDigest64Base(File fInput) throws NoSuchAlgorithmException, 
+	public String getDigest64Base() throws NoSuchAlgorithmException, 
 			FileNotFoundException, IOException{
-		return getDigest(fInput, true);
+		return Base64.encodeBase64String(digest);
 	}
 
-	private String getDigest(File fInput, boolean base64) throws NoSuchAlgorithmException, 
+	private byte[] getDigest(File fInput) throws NoSuchAlgorithmException, 
 			FileNotFoundException, IOException{
 		MessageDigest md = null;
 		FileInputStream fis = null;
-		String result = null;
+		byte[] result = null;
 		
 		try {
 			md = MessageDigest.getInstance(algorithm);
@@ -85,11 +91,7 @@ class Digest {
 			  md.update(dataBytes, 0, nread);
 			};
  
-			if (base64){
-				result = Base64.encodeBase64String(md.digest());
-			} else {
-				result = convert(md.digest());
-			}
+			result = md.digest();
 		} catch (NoSuchAlgorithmException e) {
 			throw e;
 		} catch (FileNotFoundException e) {
