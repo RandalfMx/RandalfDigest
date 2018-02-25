@@ -71,7 +71,11 @@ class Digest {
 
 	public String getDigest64Base() throws NoSuchAlgorithmException, 
 			FileNotFoundException, IOException{
-		return Base64.encodeBase64String(digest);
+		try {
+			return Base64.encodeBase64String(digest);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	private byte[] getDigest(File fInput) throws NoSuchAlgorithmException, 
