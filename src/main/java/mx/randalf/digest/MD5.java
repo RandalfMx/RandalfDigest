@@ -6,6 +6,7 @@ package mx.randalf.digest;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.NoSuchAlgorithmException;
 
 /**
@@ -23,6 +24,10 @@ public class MD5 extends Digest {
 	}
 
 	public MD5(File fInput) throws NoSuchAlgorithmException, FileNotFoundException, IOException {
+		super("MD5", fInput);
+	}
+
+	public MD5(InputStream fInput) throws NoSuchAlgorithmException, FileNotFoundException, IOException {
 		super("MD5", fInput);
 	}
 

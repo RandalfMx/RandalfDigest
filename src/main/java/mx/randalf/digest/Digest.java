@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -32,6 +33,11 @@ class Digest {
 	}
 
 	public Digest(String algorithm, File fInput) throws NoSuchAlgorithmException, FileNotFoundException, IOException {
+		this.algorithm = algorithm;
+		digest = getDigest(fInput);
+	}
+
+	public Digest(String algorithm, InputStream fInput) throws NoSuchAlgorithmException, FileNotFoundException, IOException {
 		this.algorithm = algorithm;
 		digest = getDigest(fInput);
 	}
@@ -110,6 +116,32 @@ class Digest {
 			} catch (IOException e) {
 				throw e;
 			}
+		}
+        return result;
+	}
+
+	private byte[] getDigest(InputStream fInput) throws NoSuchAlgorithmException, 
+			FileNotFoundException, IOException{
+		MessageDigest md = null;
+		byte[] result = null;
+		
+		try {
+			md = MessageDigest.getInstance(algorithm);
+ 
+			byte[] dataBytes = new byte[1024];
+ 
+			int nread = 0; 
+			while ((nread = fInput.read(dataBytes)) != -1) {
+			  md.update(dataBytes, 0, nread);
+			};
+ 
+			result = md.digest();
+		} catch (NoSuchAlgorithmException e) {
+			throw e;
+		} catch (FileNotFoundException e) {
+			throw e;
+		} catch (IOException e) {
+			throw e;
 		}
         return result;
 	}
