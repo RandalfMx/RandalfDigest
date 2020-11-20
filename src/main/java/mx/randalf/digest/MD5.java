@@ -54,9 +54,9 @@ public class MD5 extends Digest {
 				result = st[0];
 			}
 		} else if (osValidator.isUnix()) {
-			cmd = new String[3];
+			cmd = new String[2];
 			cmd[0] = fileMd5.getAbsolutePath();
-			cmd[2] = fInput.getAbsolutePath();
+			cmd[1] = fInput.getAbsolutePath();
 			output = PreparaTetml.executeRuntime(cmd);
 			if (output != null && output.trim().length() > 0) {
 				st = output.split(" ");
