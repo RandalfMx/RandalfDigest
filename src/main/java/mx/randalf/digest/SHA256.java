@@ -22,7 +22,8 @@ public class SHA256 extends Digest {
 		super("SHA-256");
 	}
 
-	public SHA256(File fInput) throws NoSuchAlgorithmException, FileNotFoundException, IOException {
-		super("SHA-256", fInput);
+	public SHA256(File fInput)
+			throws NoSuchAlgorithmException, FileNotFoundException, IOException, InterruptedException {
+		super("SHA-256", fInput, null);
 	}
 }

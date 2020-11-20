@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>mx.randalf.digest</groupId>
 	<artifactId>RandalfDigest</artifactId>
-	<version>3.0.0</version>
+	<version>3.0.1</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.9</maven.compiler.source>
@@ -49,6 +49,11 @@
   		<groupId>commons-codec</groupId>
   		<artifactId>commons-codec</artifactId>
   		<version>1.10</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>it.madeword.bookReader.hocr</groupId>
+  		<artifactId>BookReaderHocr</artifactId>
+  		<version>1.0.8</version>
   	</dependency>
   </dependencies>
 </project>

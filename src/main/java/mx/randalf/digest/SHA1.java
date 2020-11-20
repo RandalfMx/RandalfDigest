@@ -22,8 +22,8 @@ public class SHA1 extends Digest {
 		super("SHA-1");
 	}
 
-	public SHA1(File fInput) throws NoSuchAlgorithmException, FileNotFoundException, IOException {
-		super("SHA-1", fInput);
+	public SHA1(File fInput) throws NoSuchAlgorithmException, FileNotFoundException, IOException, InterruptedException {
+		super("SHA-1", fInput, null);
 	}
 
 }

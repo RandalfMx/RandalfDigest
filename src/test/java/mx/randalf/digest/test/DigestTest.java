@@ -38,7 +38,7 @@ public class DigestTest {
 		try {
 			f = new File("/Users/massi/Desktop/Lavoro/Sorgenti/Personale/Randalf/RandalfDigest/DEPLOY.txt");
 			
-			md5 = new MD5(f);
+			md5 = new MD5(f, null);
 			value = md5.getDigest();
 			System.out.println("MD5:\t\t"+value.length()+" -> "+value);
 			value = md5.getDigest64Base();
@@ -60,6 +60,8 @@ public class DigestTest {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
