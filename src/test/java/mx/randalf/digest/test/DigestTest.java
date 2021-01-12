@@ -36,7 +36,7 @@ public class DigestTest {
 		String value = "";
 		
 		try {
-			f = new File("/Users/massi/Desktop/Lavoro/Sorgenti/Personale/Randalf/RandalfDigest/DEPLOY.txt");
+			f = new File("/Users/massi/temp/Almaviva/2020_08_05_tesi_unive.warc.gz");
 			
 			md5 = new MD5(f);
 			value = md5.getDigest();

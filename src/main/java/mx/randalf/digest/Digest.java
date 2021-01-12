@@ -50,7 +50,7 @@ class Digest {
 		return getDigest(testo, false);
 	}
 
-	private String getDigest(String testo, boolean base64) throws NoSuchAlgorithmException{
+	private String getDigest(String testo, boolean isBase64) throws NoSuchAlgorithmException{
 		MessageDigest md = null;
 		String result = null;
 
@@ -58,8 +58,8 @@ class Digest {
 			md = MessageDigest.getInstance(algorithm);
 			md.update(testo.getBytes());
 			 
-			if (base64){
-				result = Base64.encodeBase64String(md.digest());
+			if (isBase64){
+				result = new String(Base64.encodeBase64(convert(md.digest()).getBytes()));
 			} else {
 				result = convert(md.digest());
 			}
@@ -78,7 +78,8 @@ class Digest {
 	public String getDigest64Base() throws NoSuchAlgorithmException, 
 			FileNotFoundException, IOException{
 		try {
-			return Base64.encodeBase64String(digest);
+			return new String(Base64.encodeBase64(convert(digest).getBytes()));
+//			return Base64.encodeBase64String(digest);
 		} catch (Exception e) {
 			return null;
 		}
