@@ -19,7 +19,7 @@ import org.apache.commons.codec.binary.Base64;
  * @author massi
  *
  */
-class Digest {
+abstract class Digest {
 
 	private String algorithm = null;
 	private String sDiget = null;
@@ -33,7 +33,7 @@ class Digest {
 		this.algorithm = algorithm;
 	}
 
-	public Digest(String algorithm, File fInput, File fileMd5)
+	public Digest(String algorithm, File fInput, File fileMd5, File fileShaSum)
 			throws NoSuchAlgorithmException, FileNotFoundException, IOException, InterruptedException {
 		this.algorithm = algorithm;
 
@@ -41,14 +41,15 @@ class Digest {
 		if (fileMd5 != null && fileMd5.exists()) {
 			sDiget = getDigest(fInput, fileMd5);
 		}
+		if (fileShaSum != null && fileShaSum.exists()) {
+			sDiget = getDigest(fInput, fileShaSum);
+		}
 		if (sDiget == null) {
 			digest = getDigest(fInput);
 		}
 	}
 
-	public String getDigest(File fInput, File fileMd5) throws IOException, InterruptedException {
-		return null;
-	}
+	public abstract String getDigest(File fInput, File fileMd5) throws IOException, InterruptedException;
 
 	public Digest(String algorithm, InputStream fInput)
 			throws NoSuchAlgorithmException, FileNotFoundException, IOException {
@@ -73,7 +74,7 @@ class Digest {
 			md.update(testo.getBytes());
 
 			if (base64) {
-				result = Base64.encodeBase64String(md.digest());
+				result = new String(Base64.encodeBase64(convert(md.digest()).getBytes()));
 			} else {
 				result = convert(md.digest());
 			}
@@ -85,12 +86,12 @@ class Digest {
 	}
 
 	public String getDigest() throws NoSuchAlgorithmException, FileNotFoundException, IOException {
-		return (sDiget==null?convert(digest):sDiget);
+		return (sDiget == null ? convert(digest) : sDiget);
 	}
 
 	public String getDigest64Base() throws NoSuchAlgorithmException, FileNotFoundException, IOException {
 		try {
-			return Base64.encodeBase64String(digest);
+			return new String(Base64.encodeBase64(convert(digest).getBytes()));
 		} catch (Exception e) {
 			return null;
 		}
@@ -183,8 +184,7 @@ class Digest {
 			b = complete.digest();
 
 			for (int i = 0; i < b.length; i++) {
-				result += Integer.toString((b[i] & 0xff) + 0x100, 16)
-						.substring(1);
+				result += Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
 			}
 		} catch (NoSuchAlgorithmException e) {
 			throw e;

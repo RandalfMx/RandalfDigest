@@ -44,13 +44,13 @@ public class DigestTest {
 			value = md5.getDigest64Base();
 			System.out.println("MD5-64Base:\t"+value.length()+" -> "+value);
 			
-			sha1 = new SHA1(f);
+			sha1 = new SHA1(f, null);
 			value = sha1.getDigest();
 			System.out.println("SHA1:\t\t"+value.length()+" -> "+value);
 			value = sha1.getDigest64Base();
 			System.out.println("SHA1-64Base:\t"+value.length()+" -> "+value);
 			
-			sha256 = new SHA256(f);
+			sha256 = new SHA256(f, null);
 			value = sha256.getDigest();
 			System.out.println("SHA256:\t\t"+value.length()+" -> "+value);
 			value = sha256.getDigest64Base();
